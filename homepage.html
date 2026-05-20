@@ -11,10 +11,14 @@
 <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
+
+  <!-- NAVBAR -->
   <header class="navbar">
     <h1>kar<span class="green">IN</span>dery<span class="orange">OUT</span></h1>
     <button onclick="openLogin()">Log In →</button>
   </header>
+
+  <!-- HERO -->
   <section class="hero">
     <div class="logo-side">
       <img src="logo.png" alt="karINderyOUT Logo">
@@ -36,6 +40,7 @@
 
      <div class="hero-buttons">
   <button class="primary-btn" onclick="openLogin()">Get Started</button>
+  <a href="#features" class="secondary-btn">View Features</a>
 </div>
     </div>
   </section>
@@ -56,7 +61,7 @@
   </div>
 </section>
 
-
+  <!-- FEATURES -->
 <section class="features" id="features">
     <div class="feature-box">
       <div class="icon green-icon">⏰</div>
@@ -92,9 +97,11 @@
   </section>
 
   
+  <!-- LOGIN MODAL -->
   <div class="modal" id="loginModal">
     <div class="modern-login">
 
+      <!-- LEFT -->
       <div class="login-left">
         <h1>kar<span class="green">IN</span>dery<span class="orange">OUT</span></h1>
         <h2>Smart Attendance<br>Starts Here.</h2>
@@ -104,6 +111,7 @@
         <div class="login-feature">Reports & Analytics</div>
       </div>
 
+      <!-- RIGHT -->
       <div class="login-right">
         <span class="close" onclick="closeLogin()">&times;</span>
         <h2>Sign <span class="green">In</span></h2>
