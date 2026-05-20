@@ -1,8 +1,4 @@
-/* ============================================
-   KARINDERYOUT — REDESIGNED HOMEPAGE
-   Aesthetic: Warm Filipino-Inspired Premium
-   Font: DM Serif Display + DM Sans
-============================================ */
+
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
 
@@ -589,7 +585,6 @@ body {
   .feature-box { border-bottom: 1px solid var(--border); }
   .feature-box:last-child { border-bottom: none; }
 }
-/* ===== HR COMPANY SYSTEM HOMEPAGE OVERRIDE ===== */
 
 :root {
   --green: #10b981;
@@ -723,7 +718,6 @@ body {
 .admin-btn {
   background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
 }
-/* ===== PREMIUM HR HOMEPAGE EXTRA SECTIONS ===== */
 
 .hr-preview {
   width: 90%;
