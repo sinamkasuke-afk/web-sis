@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Time Records</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="view-records.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <h2>kar<span>IN</span>dery<em>OUT</em></h2>
+        <p>EMPLOYEE PORTAL</p>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="employee.html">⏰ Time In / Time Out</a>
+        <a href="view-records.html" class="active">📋 View Time Records</a>
+        <a href="leave-request.html">📅 Leave Request</a>
+      </nav>
+
+      <button class="logout-btn" onclick="logout()">Log Out</button>
+    </div>
+
+    <div class="profile-box">
+      <div class="profile-avatar">E</div>
+      <div>
+        <h4>Employee</h4>
+        <p>Online</p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <section class="page-header">
+      <div>
+        <small>ATTENDANCE HISTORY</small>
+        <h1>View Time Records</h1>
+      </div>
+
+      <div class="record-filter">
+        <input type="date" id="dateFilter">
+        <button onclick="filterRecords()">Filter</button>
+      </div>
+    </section>
+
+    <section class="record-stats">
+
+      <div class="record-card">
+        <div class="record-icon green-soft">📅</div>
+        <div>
+          <p>Total Days</p>
+          <h2>6</h2>
+          <span>This Week</span>
+        </div>
+      </div>
+
+      <div class="record-card">
+        <div class="record-icon blue-soft">⏱️</div>
+        <div>
+          <p>Total Hours Worked</p>
+          <h2>42h 15m</h2>
+          <span>This Week</span>
+        </div>
+      </div>
+
+      <div class="record-card">
+        <div class="record-icon orange-soft">☕</div>
+        <div>
+          <p>Total Break Time</p>
+          <h2>2h 45m</h2>
+          <span>This Week</span>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="logout()">Log Out</button>
+
+      <div class="record-card">
+        <div class="record-icon green-soft">🏅</div>
+        <div>
+          <p>Attendance Rate</p>
+          <h2>95%</h2>
+          <span>This Week</span>
+        </div>
+      </div>
+
+    </section>
+    
+
+    <section class="records-table-card">
+
+      <div class="records-header">
+        <div>
+          <h2>Time Records</h2>
+          <p id="showingText">Showing 7 records</p>
+        </div>
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Day</th>
+            <th>Time In</th>
+            <th>Time Out</th>
+            <th>Break Time</th>
+            <th>Total Hours</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="recordsTable">
+
+          <tr data

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="employee.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <h2>kar<span>IN</span>dery<em>OUT</em></h2>
+        <p>EMPLOYEE PORTAL</p>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="employee.html" class="active">⏰ Time In / Time Out</a>
+        <a href="view-records.html">📋 View Time Records</a>
+        <a href="leave-request.html">📅 Leave Request</a>
+      </nav>
+
+      <button class="logout-btn" onclick="logout()">Log Out</button>
+    </div>
+
+    <div class="profile-box">
+      <div class="profile-avatar">E</div>
+      <div>
+        <h4>Employee</h4>
+        <p>Online</p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <section class="page-header">
+      <div>
+        <small>GOOD AFTERNOON!</small>
+        <h1>Employee Dashboard</h1>
+      </div>
+
+      <div class="date-box" id="currentDate">Today</div>
+    </section>
+
+    <section class="hero-card">
+      <div>
+        <h2>Track your time. Stay productive.</h2>
+        <p>Manage your attendance efficiently without clutter.</p>
+      </div>
+
+      <div class="hero-icon">🕘</div>
+    </section>
+
+    <section class="main-grid">
+
+      <div class="time-card">
+        <div class="time-icon">⏰</div>
+        <small>CURRENT TIME</small>
+        <h2 id="clock">--:-- --</h2>
+        <p id="dateText">Today</p>
+
+        <div class="btn-row">
+          <button class="time-in-btn" onclick="timeIn()">Time In</button>
+          <button class="time-out-btn" onclick="timeOut()">Time Out</button>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <h2>Recent Activity</h2>
+
+        <div class="activity-item">
+          <div class="activity-icon green-soft">✅</div>
+          <div>
+            <h4 id="activityTitle">Ready for Time In</h4>
+            <p id="activityText">Click Time In to start your work record.</p>
+          </div>
+          <span class="status active-status" id="activityStatus">Active</span>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon orange-soft">📅</div>
+          <div>
+            <h4>Leave Request</h4>
+            <p>You can submit a leave request anytime this year.</p>
+          </div>
+          <span class="status open-status">Open</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<div class="toast" id="toast">Saved</div>
+
+<script>
+  const today = new Date();
+
+  document.getElementById("currentDate").textContent =
+    today.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+
+  document.getElementById("dateText").textContent =
+    today.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+
+  function updateClock() {
+    const now = new Date();
+
+    document.getElementById("clock").textContent =
+      now.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.style.display = "block";
+
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 2200);
+  }
+
+  function timeIn() {
+    const now = new Date();
+
+    document.getElementById("activityTitle").textContent = "Time In Recorded";
+    document.getElementById("activityText").textContent =
+      "You timed in at " + now.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit"
+      });
+
+    document.getElementById("activityStatus").textContent = "Timed In";
+
+    showToast("Time In saved successfully.");
+  }
+
+  function timeOut() {
+    const now = new Date();
+
+    document.getElementById("activityTitle").textContent = "Time Out Recorded";
+    document.getElementById("activityText").textContent =
+      "You timed out at " + now.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit"
+      });
+
+    document.getElementById("activityStatus").textContent = "Completed";
+
+    showToast("Time Out saved successfully.");
+  }
+
+  function logout() {
+    window.location.href = "homepage.html";
+  }
+</script>
+
+</body>
+</html>
