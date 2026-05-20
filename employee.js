@@ -2,7 +2,6 @@ const role = localStorage.getItem("role");
 
 console.log("Current role:", role);
 
-// CLOCK
 function updateClock() {
   const clock = document.getElementById("clock");
 
@@ -23,7 +22,6 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// LOGOUT MODAL
 window.openLogout = function () {
   document.getElementById("logoutModal").style.display = "flex";
 };
