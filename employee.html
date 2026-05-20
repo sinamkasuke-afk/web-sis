@@ -6,7 +6,6 @@
   <title>Employee Dashboard</title>
 
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="employee.css">
 </head>
 
@@ -78,20 +77,26 @@
 
         <div class="activity-item">
           <div class="activity-icon green-soft">✅</div>
+
           <div>
             <h4 id="activityTitle">Ready for Time In</h4>
             <p id="activityText">Click Time In to start your work record.</p>
           </div>
+
           <span class="status active-status" id="activityStatus">Active</span>
         </div>
 
         <div class="activity-item">
           <div class="activity-icon orange-soft">📅</div>
+
           <div>
             <h4>Leave Request</h4>
-            <p>You can submit a leave request anytime this year.</p>
+            <p>Click here to submit your leave request.</p>
           </div>
-          <span class="status open-status">Open</span>
+
+          <button class="leave-open-button" onclick="goToLeaveRequest()">
+            Open
+          </button>
         </div>
       </div>
 
@@ -105,6 +110,16 @@
 
 <script>
   const today = new Date();
+  const todayKey = today.toLocaleDateString("en-US");
+
+  let savedAttendance =
+    JSON.parse(localStorage.getItem("employeeAttendance")) || {};
+
+  let hasTimedIn =
+    savedAttendance.date === todayKey && savedAttendance.timedIn === true;
+
+  let hasTimedOut =
+    savedAttendance.date === todayKey && savedAttendance.timedOut === true;
 
   document.getElementById("currentDate").textContent =
     today.toLocaleDateString("en-US", {
@@ -144,8 +159,57 @@
     }, 2200);
   }
 
+  function saveAttendance() {
+    localStorage.setItem(
+      "employeeAttendance",
+      JSON.stringify({
+        date: todayKey,
+        timedIn: hasTimedIn,
+        timedOut: hasTimedOut
+      })
+    );
+  }
+
+  function updateButtonState() {
+    const timeInBtn = document.querySelector(".time-in-btn");
+    const timeOutBtn = document.querySelector(".time-out-btn");
+
+    if (hasTimedOut) {
+      timeInBtn.disabled = true;
+      timeOutBtn.disabled = true;
+
+      document.getElementById("activityTitle").textContent = "Attendance Completed";
+      document.getElementById("activityText").textContent =
+        "You already timed in and timed out today.";
+      document.getElementById("activityStatus").textContent = "Completed";
+    } else if (hasTimedIn) {
+      timeInBtn.disabled = true;
+      timeOutBtn.disabled = false;
+
+      document.getElementById("activityTitle").textContent = "Currently Timed In";
+      document.getElementById("activityText").textContent =
+        "You can time out when your work is done.";
+      document.getElementById("activityStatus").textContent = "Timed In";
+    } else {
+      timeInBtn.disabled = false;
+      timeOutBtn.disabled = false;
+    }
+  }
+
   function timeIn() {
+    if (hasTimedOut) {
+      alert("You already timed out today. You can time in again tomorrow.");
+      return;
+    }
+
+    if (hasTimedIn) {
+      alert("You already timed in today.");
+      return;
+    }
+
     const now = new Date();
+    hasTimedIn = true;
+    saveAttendance();
 
     document.getElementById("activityTitle").textContent = "Time In Recorded";
     document.getElementById("activityText").textContent =
@@ -156,11 +220,24 @@
 
     document.getElementById("activityStatus").textContent = "Timed In";
 
+    updateButtonState();
     showToast("Time In saved successfully.");
   }
 
   function timeOut() {
+    if (!hasTimedIn) {
+      alert("You need to time in first.");
+      return;
+    }
+
+    if (hasTimedOut) {
+      alert("You already timed out today.");
+      return;
+    }
+
     const now = new Date();
+    hasTimedOut = true;
+    saveAttendance();
 
     document.getElementById("activityTitle").textContent = "Time Out Recorded";
     document.getElementById("activityText").textContent =
@@ -171,12 +248,19 @@
 
     document.getElementById("activityStatus").textContent = "Completed";
 
+    updateButtonState();
     showToast("Time Out saved successfully.");
+  }
+
+  function goToLeaveRequest() {
+    window.location.href = "leave-request.html";
   }
 
   function logout() {
     window.location.href = "homepage.html";
   }
+
+  updateButtonState();
 </script>
 
 </body>
