@@ -1,7 +1,7 @@
 const role = localStorage.getItem("role");
 
 if (role !== "admin") {
-  window.location.href = "homepage.html";
+  window.location.href = "index.html";
 }
 
 function openLogout(){
@@ -14,7 +14,7 @@ function closeLogout(){
 
 function confirmLogout(){
   localStorage.removeItem("role");
-  window.location.href = "homepage.html";
+  window.location.href = "index.html";
 }
 
 function logout(){
