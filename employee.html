@@ -109,17 +109,15 @@
 <div class="toast" id="toast">Saved</div>
 
 <script>
+  let currentRecord = {
+    date: "",
+    timeIn: "",
+    timeOut: "",
+    status: ""
+  };
+
   const today = new Date();
   const todayKey = today.toLocaleDateString("en-US");
-
-  let savedAttendance =
-    JSON.parse(localStorage.getItem("employeeAttendance")) || {};
-
-  let hasTimedIn =
-    savedAttendance.date === todayKey && savedAttendance.timedIn === true;
-
-  let hasTimedOut =
-    savedAttendance.date === todayKey && savedAttendance.timedOut === true;
 
   document.getElementById("currentDate").textContent =
     today.toLocaleDateString("en-US", {
@@ -159,97 +157,75 @@
     }, 2200);
   }
 
-  function saveAttendance() {
-    localStorage.setItem(
-      "employeeAttendance",
-      JSON.stringify({
-        date: todayKey,
-        timedIn: hasTimedIn,
-        timedOut: hasTimedOut
-      })
-    );
+  function getRecords() {
+    return JSON.parse(localStorage.getItem("attendanceRecords")) || [];
   }
 
-  function updateButtonState() {
-    const timeInBtn = document.querySelector(".time-in-btn");
-    const timeOutBtn = document.querySelector(".time-out-btn");
+  function saveRecords(records) {
+    localStorage.setItem("attendanceRecords", JSON.stringify(records));
+  }
 
-    if (hasTimedOut) {
-      timeInBtn.disabled = true;
-      timeOutBtn.disabled = true;
-
-      document.getElementById("activityTitle").textContent = "Attendance Completed";
-      document.getElementById("activityText").textContent =
-        "You already timed in and timed out today.";
-      document.getElementById("activityStatus").textContent = "Completed";
-    } else if (hasTimedIn) {
-      timeInBtn.disabled = true;
-      timeOutBtn.disabled = false;
-
-      document.getElementById("activityTitle").textContent = "Currently Timed In";
-      document.getElementById("activityText").textContent =
-        "You can time out when your work is done.";
-      document.getElementById("activityStatus").textContent = "Timed In";
-    } else {
-      timeInBtn.disabled = false;
-      timeOutBtn.disabled = false;
-    }
+  function updateActivity(title, text, status) {
+    document.getElementById("activityTitle").textContent = title;
+    document.getElementById("activityText").textContent = text;
+    document.getElementById("activityStatus").textContent = status;
   }
 
   function timeIn() {
-    if (hasTimedOut) {
-      alert("You already timed out today. You can time in again tomorrow.");
-      return;
-    }
-
-    if (hasTimedIn) {
-      alert("You already timed in today.");
-      return;
-    }
-
     const now = new Date();
-    hasTimedIn = true;
-    saveAttendance();
 
-    document.getElementById("activityTitle").textContent = "Time In Recorded";
-    document.getElementById("activityText").textContent =
-      "You timed in at " + now.toLocaleTimeString("en-US", {
+    currentRecord = {
+      date: todayKey,
+      timeIn: now.toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit"
-      });
+      }),
+      timeOut: "",
+      status: "Timed In"
+    };
 
-    document.getElementById("activityStatus").textContent = "Timed In";
+    updateActivity(
+      "Time In Recorded",
+      "You timed in at " + currentRecord.timeIn,
+      "Timed In"
+    );
 
-    updateButtonState();
     showToast("Time In saved successfully.");
   }
 
   function timeOut() {
-    if (!hasTimedIn) {
+    if (currentRecord.timeIn === "") {
       alert("You need to time in first.");
       return;
     }
 
-    if (hasTimedOut) {
-      alert("You already timed out today.");
-      return;
-    }
-
     const now = new Date();
-    hasTimedOut = true;
-    saveAttendance();
 
-    document.getElementById("activityTitle").textContent = "Time Out Recorded";
-    document.getElementById("activityText").textContent =
-      "You timed out at " + now.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit"
-      });
+    currentRecord.timeOut = now.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit"
+    });
 
-    document.getElementById("activityStatus").textContent = "Completed";
+    currentRecord.status = "Completed";
 
-    updateButtonState();
+    const records = getRecords();
+    records.push(currentRecord);
+    saveRecords(records);
+
+    updateActivity(
+      "Attendance Completed",
+      "Time In: " + currentRecord.timeIn + " | Time Out: " + currentRecord.timeOut,
+      "Completed"
+    );
+
     showToast("Time Out saved successfully.");
+
+    currentRecord = {
+      date: "",
+      timeIn: "",
+      timeOut: "",
+      status: ""
+    };
   }
 
   function goToLeaveRequest() {
@@ -259,8 +235,6 @@
   function logout() {
     window.location.href = "index.html";
   }
-
-  updateButtonState();
 </script>
 
 </body>

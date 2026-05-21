@@ -1,11 +1,11 @@
 function loginEmployee() {
   localStorage.setItem("role", "employee");
-  window.location.href = "homepage.html";
+  window.location.href = "index.html";
 }
 
 function loginAdmin() {
   localStorage.setItem("role", "admin");
-  window.location.href = "homepage.html";
+  window.location.href = "index.html";
 }
 
 function logout() {
@@ -15,7 +15,7 @@ function logout() {
 
 const role = localStorage.getItem("role");
 
-if (window.location.pathname.includes("homepage.html")) {
+if (window.location.pathname.includes("index.html")) {
   const welcomeText = document.getElementById("welcomeText");
   const menu = document.getElementById("menu");
 
